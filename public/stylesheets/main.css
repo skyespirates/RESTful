@@ -1,0 +1,28 @@
+h1 {
+    text-align: center;
+}
+i.icon {
+    font-size: 2em;
+}
+input {
+    display: block;
+}
+
+#fom {
+    display: inline;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+.library {
+    font-size: 1.75em;
+}
+.tag {
+    font-size: 1.25em;
+}
+#comment {
+    display: flex;
+    justify-content: flex-end;
+}

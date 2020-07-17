@@ -1,0 +1,63 @@
+<%- include("../partials/header") %>
+
+    <div><a class="ui yellow button" href="/blogs">Back</a></div>
+    <div class="ui main text container segment">
+        <div class="ui top attached">
+            <div class="item">
+                <h1 id="hsatu"><%= found.title %></h1>
+            </div>
+            <div class="image">
+                <img class="ui centered rounded image" src="<%= found.image %>" alt="image">
+            </div>
+            <div>
+                <h6 style="margin-bottom: 0;"><%= found.created.toDateString() %></h6>
+                <p style="padding-top: 0;"><%- found.description %></p>
+            </div>
+            <div>
+                <a class="ui blue button" href="/blogs/<%= found._id %>/edit">Edit</a>
+                <form id="fom" action="/blogs/<%= found._id %>?_method=DELETE" method="POST">
+                    <input class="ui red button" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div class="ui blue segment">
+          <div id="comment">
+          <a class="ui small green button" href="/blogs/<%= found._id %>/comments/new">Add Comment</a>
+          </div>
+              <% found.comments.forEach(function(comment){ %>
+                <div class="ui padded segment">
+                  <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+                </div>
+              <% }) %>
+        </div>
+    </div>
+    <!-- <div class="ui container segment">
+        <h2>Text Formatting for Description</h2>
+        <table class="ui celled table">
+            <thead>
+              <tr><th>Contoh</th>
+              <th>Tag</th>
+              <th>Aplikasi</th>
+            </tr></thead>
+            <tbody>
+              <tr>
+                <td data-label="Contoh">When <strong> one value </strong> is specified</td>
+                <td data-label="Tag">strong</td>
+                <td data-label="Aplikasi">When <<span>strong</span>> one value <<span>/strong</span>> is specified</td>
+              </tr>
+              <tr>
+                <td data-label="Contoh">The size of <em> the margin </em> as a percentage</td>
+                <td data-label="Tag">em</td>
+                <td data-label="Aplikasi">The size of <<span>em</span>> the margin <<span>/em</span> as a percentage</td>
+              </tr>
+              <tr>
+                <td data-label="Contoh">A table can specify <ins> that its cell </ins> contents</td>
+                <td data-label="Tag">ins</td>
+                <td data-label="Aplikasi">A table can specify <<span>ins</span>> that its cell </<span>ins</span>> contents</td>
+              </tr>
+            </tbody>
+          </table>
+    </div> -->
+
+<%- include("../partials/footer") %>

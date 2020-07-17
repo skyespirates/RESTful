@@ -1,0 +1,28 @@
+<%- include("../partials/header") %>
+<div class="ui main text container">
+    <div class="ui huge header">Index page</div>
+    <div class="ui top attached segment">
+        <div class="ui divided items">
+            <% content.forEach((cont) => { %>
+                <div class="item">
+                    <div class="image">
+                        <img src="<%= cont.image %>">
+                    </div>
+                    <div class="content">
+                        <h2><a href="/blogs/<%= cont._id %>"><%= cont.title %></a></h2>
+                        <div class="meta">
+                            <span><%= cont.created.toDateString() %></span>
+                        </div>
+                        <div class="description">
+                            <p><%- cont.description.substring(0, 100) %>...</p>
+                        </div>
+                        <div class="extra">
+                            <a class="ui floated basic default button" href="/blogs/<%= cont._id %>">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</div>
+<%- include("../partials/footer") %>
