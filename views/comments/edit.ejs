@@ -1,0 +1,19 @@
+<%- include("../partials/header") %>
+    <div class="ui main text container segment">
+        <div class="ui huge header">Edit Comment to <%= content.title %></div>
+        <form class="ui form" action="/blogs/<%= content._id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+            <div class="field">
+                <label>Comment</label>
+                <input type="text" name="comment[text]" value="<%= comment.text %>">
+            </div>
+            <div class="field">
+                <label>Author</label>
+                <input type="text" name="comment[author]" value="<%= comment.author %>">
+            </div>
+            <div class="field">
+                <input class="ui primary button" type="submit">
+            </div>
+        </form>
+    </div>
+
+<%- include("../partials/footer") %>

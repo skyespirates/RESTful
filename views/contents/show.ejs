@@ -28,6 +28,10 @@
               <% found.comments.forEach(function(comment){ %>
                 <div class="ui padded segment">
                   <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+                  <a class="ui small blue button" href="/blogs/<%= found._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                  <form action="/blogs/<%= found._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                    <input class="ui small red button" type="submit" value="Delete">
+                  </form>
                 </div>
               <% }) %>
         </div>
