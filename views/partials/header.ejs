@@ -17,5 +17,14 @@
         <a class="item active" href="/">Home</a>
         <a class="item" href="/about">About</a>
         <a class="item" href="/blogs/new">New Post</a>
+        <div class="right menu">
+          <% if(!currentUser){ %>
+            <a class="item" href="/register" class="item">Sign Up</a>
+            <a class="item" href="/login" class="item">Login</a>
+          <% } else { %>
+            <a class="item" href="#">Sign In as <%= currentUser.username %></a>
+            <a class="item" href="/logout" class="item">Logout</a>
+          <% } %>
+        </div>
       </div>
     </div>

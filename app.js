@@ -3,12 +3,14 @@ const express            = require("express"),
       mongoose           = require("mongoose"),
       bodyParser         = require("body-parser"),
       methodOverride     = require("method-override"),
-      expressSanitizer   = require("express-sanitizer");
+      expressSanitizer   = require("express-sanitizer"),
+      passport           = require("passport"),
+      LocalStrategy      = require("passport-local");
       
 var   Content            = require("./models/content"),
       seedDB             = require("./seeds"),    
       Comment              = require("./models/comment");      
-    //   User               = require("./models/user");      
+      User               = require("./models/user");      
 
 mongoose.connect("mongodb://localhost:27017/restful", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
                 ).then(() =>{
@@ -24,14 +26,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(expressSanitizer());
 
+
+//  PASSPORT CONFIGURATION
+app.use(require("express-session")({
+    secret: "Skyes Crawford",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+})
 // seedDB();
-
-
-// Content.create({
-//     title: "second",
-//     image: "https://images.unsplash.com/photo-1594012487062-cfdf01df1d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-//     description: "second upload content"
-// });
 
 //  LANDING PAGE
 app.get("/", (req, res) => {
@@ -44,6 +56,7 @@ app.get("/blogs", (req, res) => {
         if(err){
             console.log(err);
         } else {
+            // currentUser
             res.render("contents/index", {content: test});
         }
     })
@@ -173,7 +186,39 @@ app.delete("/blogs/:id/comments/:cid", (req, res) => {
             res.redirect("/blogs/" + req.params.id);
         }
     })
+});
+//  REGISTER
+app.get("/register", (req, res) => {
+    res.render("register");
 })
+app.post("/register", (req, res) => {
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, (err, user) => {
+        if(err){
+            console.log(err);
+            res.redirect("/register");
+        }
+        passport.authenticate("local")(req, res, () =>{
+            res.redirect("/blogs");
+        })
+    })
+})
+//  LOGIN
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+app.post("/login", passport.authenticate("local",
+    {
+        successRedirect: "/blogs",
+        failureRedirect: "/login"
+    }), function(req, res){
+});
+
+app.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect("/login");
+})
+
 app.listen(3000, (req, res) => {
     console.log("connected...");
 })
