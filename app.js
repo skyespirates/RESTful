@@ -17,7 +17,7 @@ const contentRoutes = require("./routes/contents"),
       indexRoutes   = require("./routes/index");
 
 var url = process.env.DATABASEURL || "mongodb://localhost:27017/restful";
-mongoose.connect(process.env.DATABASEURL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
                 ).then(() =>{
                     console.log("connected to mongoDB")})
                 .catch((err) =>{
