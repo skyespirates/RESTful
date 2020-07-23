@@ -9,7 +9,7 @@
                         <img src="<%= cont.image %>">
                     </div>
                     <div class="content">
-                        <h2><a href="/blogs/<%= cont._id %>"><%= cont.title %></a></h2>
+                        <h2><a href="/blogs/<%= cont._id %>"><%= cont.title %></a> - <%= cont.author.username %></h2>
                         <div class="meta">
                             <span><%= cont.created.toDateString() %></span>
                         </div>

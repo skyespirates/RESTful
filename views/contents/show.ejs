@@ -8,16 +8,19 @@
             </div>
             <div class="image">
                 <img class="ui centered rounded image" src="<%= found.image %>" alt="image">
+                <p><em>Created by <%= found.author.username %></em></p>
             </div>
             <div>
                 <h6 style="margin-bottom: 0;"><%= found.created.toDateString() %></h6>
                 <p style="padding-top: 0;"><%- found.description %></p>
             </div>
             <div>
+              <% if(currentUser && found.author.id.equals(currentUser._id)){ %>
                 <a class="ui blue button" href="/blogs/<%= found._id %>/edit">Edit</a>
                 <form id="fom" action="/blogs/<%= found._id %>?_method=DELETE" method="POST">
                     <input class="ui red button" type="submit" value="Delete">
                 </form>
+              <% } %>
             </div>
         </div>
         <hr>
@@ -27,11 +30,13 @@
           </div>
               <% found.comments.forEach(function(comment){ %>
                 <div class="ui padded segment">
-                  <p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+                  <p><strong><%= comment.author.username %></strong> - <%= comment.text %></p>
+                  <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
                   <a class="ui small blue button" href="/blogs/<%= found._id %>/comments/<%= comment._id %>/edit">Edit</a>
                   <form action="/blogs/<%= found._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                     <input class="ui small red button" type="submit" value="Delete">
                   </form>
+                  <% } %>
                 </div>
               <% }) %>
         </div>
